@@ -1,3 +1,6 @@
 #Composer
 /vendor/
 composer.lock
+
+#PHP-CS
+.php_cs.cache
