@@ -57,6 +57,17 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $response = new Response($this->request, $output);
     }
 
+    public function testSupportedNullOutputWhenStatusCodeNotOK()
+    {
+        $this->request
+            ->method('getExpectedOutput')
+            ->willReturn('Foo\Bar')
+            ;
+        $output = new \stdClass();
+
+        $response = new Response($this->request, null, ResponseStatusCode::NOT_SUPPORTED);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */

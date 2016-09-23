@@ -24,15 +24,18 @@ class Response
     ) {
         $this->request = $request;
 
-        $expectedOutput = $this->request->getExpectedOutput();
-        if ($expectedOutput && !$output instanceof $expectedOutput) {
-            throw new OutputTypeException('The output has to be an instance of '.$this->request->getExpectedOutput());
-        }
-        $this->output = $output;
-
         if (!ResponseStatusCode::isValidValue($statusCode)) {
             throw new \InvalidArgumentException('This statusCode is not valid');
         }
+
+        $expectedOutput = $this->request->getExpectedOutput();
+        if ($expectedOutput
+            && !$output instanceof $expectedOutput
+            && ($this->statusCode == ResponseStatusCode::OK || $output !== null)
+        ) {
+            throw new OutputTypeException('The output has to be an instance of '.$this->request->getExpectedOutput());
+        }
+        $this->output = $output;
 
         $this->statusCode = $statusCode;
 
