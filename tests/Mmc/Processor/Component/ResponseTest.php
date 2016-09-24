@@ -1,10 +1,10 @@
 <?php
 
-namespace Mmc\Processor\Tests;
+namespace Mmc\Processor\Component\Tests;
 
-use Mmc\Processor\Request;
-use Mmc\Processor\Response;
-use Mmc\Processor\ResponseStatusCode;
+use Mmc\Processor\Component\Request;
+use Mmc\Processor\Component\Response;
+use Mmc\Processor\Component\ResponseStatusCode;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,7 +44,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Mmc\Processor\Exception\OutputTypeException
+     * @expectedException Mmc\Processor\Component\Exception\OutputTypeException
      */
     public function testBadOutput()
     {

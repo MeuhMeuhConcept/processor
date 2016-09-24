@@ -1,8 +1,8 @@
 <?php
 
-namespace Mmc\Processor;
+namespace Mmc\Processor\Component;
 
-use Mmc\Processor\Exception\OutputTypeException;
+use Mmc\Processor\Component\Exception\OutputTypeException;
 
 class Response
 {

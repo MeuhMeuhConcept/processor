@@ -1,6 +1,6 @@
 <?php
 
-namespace Mmc\Processor;
+namespace Mmc\Processor\Component;
 
 class BasicProcessor implements Processor
 {

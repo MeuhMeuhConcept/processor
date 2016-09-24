@@ -24,7 +24,7 @@ This object will be use to determine if processor can do the job and to do it.
 ```php
 <?php
 
-use Mmc\Processor\Request;
+use Mmc\Processor\Component\Request;
 
 $object; // The object is the reason of your request.
 
@@ -37,7 +37,7 @@ The object return in the response will necessary be an instance of this class (o
 ```php
 <?php
 
-use Mmc\Processor\Request;
+use Mmc\Processor\Component\Request;
 
 $object; // The object is the reason of your request.
 
@@ -59,14 +59,14 @@ if ($chainProcessor->supports($request) { // Test if the processor can do the jo
 ```
 
 In fact you can directly tyr to do the job with a `ChainProcessor`.
-If the job can't be done the processor return a response with the special status code `Mmc\Processor\ResponseStatusCode::NOT_IMPLEMENTED`.
+If the job can't be done the processor return a response with the special status code `Mmc\Processor\Component\ResponseStatusCode::NOT_IMPLEMENTED`.
 
 ### Use the __Response__
 The fisrt thing that you have to do with a `Response` is to consult the status code to know how the job is done.
 ```php
 <?php
 
-use Mmc\Processor\ResponseStatusCode;
+use Mmc\Processor\Component\ResponseStatusCode;
 
 if ($response->getStatusCode() == ResponseStatusCode::OK) {
     // the job had been correctly done.
@@ -96,14 +96,14 @@ $response->getOutput();
 This library is not ready to play because there is no `Processor` define in it.
 You have to create them to do the job that you want.
 
-To do it you just have to create a class who implements `Mmc\Processor\Processor` interface.
+To do it you just have to create a class who implements `Mmc\Processor\Component\Processor` interface.
 ```php
 <?php
 
-use Mmc\Processor\Processor;
-use Mmc\Processor\Request;
-use Mmc\Processor\Response;
-use Mmc\Processor\ResponseStatusCode;
+use Mmc\Processor\Component\Processor;
+use Mmc\Processor\Component\Request;
+use Mmc\Processor\Component\Response;
+use Mmc\Processor\Component\ResponseStatusCode;
 
 class CustomProcessor implements Processor
 {

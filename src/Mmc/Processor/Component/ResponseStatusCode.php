@@ -1,6 +1,6 @@
 <?php
 
-namespace Mmc\Processor;
+namespace Mmc\Processor\Component;
 
 use Greg0ire\Enum\AbstractEnum;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Mmc\Processor\Tests;
+namespace Mmc\Processor\Component\Tests;
 
-use Mmc\Processor\Request;
+use Mmc\Processor\Component\Request;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetters()
     {
         $input = new \stdClass();
-        $expectedOuput = 'Mmc\Processor\ResponseSample';
+        $expectedOuput = 'Mmc\Processor\Component\ResponseSample';
         $r = new Request($input, $expectedOuput);
 
         $this->assertEquals($input, $r->getInput());

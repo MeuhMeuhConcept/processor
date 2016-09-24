@@ -1,9 +1,9 @@
 <?php
 
-namespace Mmc\Processor\Test;
+namespace Mmc\Processor\Component\Test;
 
-use Mmc\Processor\ChainProcessorItem;
-use Mmc\Processor\Processor;
+use Mmc\Processor\Component\ChainProcessorItem;
+use Mmc\Processor\Component\Processor;
 
 class ChainProcessorItemTest extends \PHPUnit_Framework_TestCase
 {

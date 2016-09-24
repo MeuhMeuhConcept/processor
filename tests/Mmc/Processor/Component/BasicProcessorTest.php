@@ -1,10 +1,10 @@
 <?php
 
-namespace Mmc\Processor\Test;
+namespace Mmc\Processor\Component\Test;
 
-use Mmc\Processor\BasicProcessor;
-use Mmc\Processor\Request;
-use Mmc\Processor\ResponseStatusCode;
+use Mmc\Processor\Component\BasicProcessor;
+use Mmc\Processor\Component\Request;
+use Mmc\Processor\Component\ResponseStatusCode;
 
 class BasicProcessorTest extends \PHPUnit_Framework_TestCase
 {
