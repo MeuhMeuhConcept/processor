@@ -140,7 +140,56 @@ Now, you just have to add it on a `ChainProcessor`.
 $chainProcessor->add(new CustomProcessor());
 ```
 
+## Integration with other libraries
+
+### Symfony
+`meuhmeuhconcept/processor` contains a `CompilerPass` to link automatically `Processor` to a `ChainProcessor`.
+
+#### Configuration
+You can use this `CompilerPass` with class `Mmc\Processor\Bridge\Symfony\DependencyInjection\Compiler\ProcessorPass` or just add the bundle in your Symfony kernel like this :
+```php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = [
+        // ...
+        new Mmc\Processor\Bridge\Symfony\Bundle\MmcProcessorBundle(),
+    ];
+
+    // ...
+
+    return $bundles;
+}
+```
+
+To use it you have to require `symfony/dependency-injection` and `symfony/options-resolver` packages (if you don't use Symfony fullstack).
+
+### Uses
+Now you can use the tag `mmc.processor.chain` on a service (which is instance of `ChainProcessor`).
+Every services tagged with the name of this service will be add in it.
+
+You can add `priority` parameter on the tag to set the priority of the processor (default priority is 10).
+
+```yaml
+services:
+    my_chain:
+        class: Mmc\Processor\Component\ChainProcessor
+        tags:
+            - { name: 'mmc.processor.chain' }
+
+    p1:
+        class: Foo\Processor
+        tags:
+            - { name: 'my_chain', priority: 5 }
+    p2:
+        class: Bar\Processor
+        tags:
+            - { namse 'my_chain' }
+```
+
+In this example, the `ChainProcessor` __my\_chain__ will receive the two `Processor` __p1__ and __p2__.
+
 ## What now ?
 The input of the `Request` if no constraint by a type hinting, so you can use really what you want to create your request.
 The `ChainProcessor` can do what you want... if it contains `Processor` can do it.
-
