@@ -125,7 +125,7 @@ class CustomProcessor implements Processor
         }
 
         // do the job
-        
+
         // and return the Response
 
         return Resposne($request, $output); // $output had been create during the job was doing
@@ -185,7 +185,7 @@ services:
     p2:
         class: Bar\Processor
         tags:
-            - { namse 'my_chain' }
+            - { name: 'my_chain' }
 ```
 
 In this example, the `ChainProcessor` __my\_chain__ will receive the two `Processor` __p1__ and __p2__.
