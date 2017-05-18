@@ -2,7 +2,7 @@
 
 namespace Mmc\Processor\Component;
 
-class ChainProcessor implements Processor
+class ChainProcessor extends AbstractProcessor
 {
     private $items;
 
@@ -33,7 +33,7 @@ class ChainProcessor implements Processor
         return false;
     }
 
-    public function process($request)
+    protected function doProcess($request)
     {
         foreach ($this->items as $item) {
             $processor = $item->getProcessor();
@@ -44,7 +44,5 @@ class ChainProcessor implements Processor
                 return $response;
             }
         }
-
-        return new Response($request, null, ResponseStatusCode::NOT_IMPLEMENTED);
     }
 }

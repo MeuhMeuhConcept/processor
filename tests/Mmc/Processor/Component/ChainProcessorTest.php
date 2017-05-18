@@ -39,7 +39,7 @@ class ChainProcessorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->chainProcessor->supports($request));
 
-        $this->assertEquals(ResponseStatusCode::NOT_IMPLEMENTED, $this->chainProcessor->process($request)->getStatusCode());
+        $this->assertEquals(ResponseStatusCode::NOT_SUPPORTED, $this->chainProcessor->process($request)->getStatusCode());
     }
 
     public function testChain()
