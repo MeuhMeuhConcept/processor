@@ -29,7 +29,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function testConstructAndGetters()
     {
         $output = new \stdClass();
-        $statusCode = ResponseStatusCode::NOT_IMPLEMENTED;
+        $statusCode = ResponseStatusCode::NOT_SUPPORTED;
         $reasonPhrase = 'reason_phrase';
 
         $response = new Response($this->request, $output, $statusCode, $reasonPhrase);
