@@ -17,31 +17,16 @@ The first processor who awser that it can do it will be use.
 The response contains several things like the request itself, the status code, name of processor who do the job and obviously the output of the job.
 
 ### Build a __Request__
-Before use the processor you have to build your request. You Request has to contain the object your demand.
+Before use the processor you have to build your request. You request can be what ever you want : a simple string, an array, a object...
 This object will be use to determine if processor can do the job and to do it.
 
 #### Example
 ```php
 <?php
 
-use Mmc\Processor\Component\Request;
-
 $object; // The object is the reason of your request.
 
-$request = new Request($object);
-```
-
-#### Expected Output
-You can specify the class (or interface) of the output that you expected. It can help to determine which processor will be able to do the job.
-The object return in the response will necessary be an instance of this class (or implement the interface).
-```php
-<?php
-
-use Mmc\Processor\Component\Request;
-
-$object; // The object is the reason of your request.
-
-$request = new Request($object, 'Foo\Bar'); // The output object will be an Foo\Bar object
+$request = ['action' => 'validate', 'item' => $object];
 ```
 
 ### Proceed the job
@@ -51,14 +36,14 @@ You just have to use a `Processor` to try to do the job. The best way is to use 
 
 $chainProcessor; // We considere that this processors is already init with several processors
 
-$request; // We considere thath you already build the request
+$request; // We considere that you already build the request
 
 if ($chainProcessor->supports($request) { // Test if the processor can do the job
     $response = $chainProcessor->proccess($request); //Do the job
 }
 ```
 
-In fact you can directly tyr to do the job with a `ChainProcessor`.
+In fact you can directly try to do the job with a `ChainProcessor`.
 If the job can't be done the processor return a response with the special status code `Mmc\Processor\Component\ResponseStatusCode::NOT_IMPLEMENTED`.
 
 ### Use the __Response__
@@ -83,7 +68,7 @@ You can also know which `Processor` had done the job (when you use a `ChainProce
 $response->getExtra('name');
 ```
 
-Obviously you can get the initial `Request` (i.e. to get the input) with the method `$response->getRequest()`.
+Obviously you can get the initial request (i.e. to get the input) with the method `$response->getRequest()`.
 
 And the more important is to get the result of the job.
 ```php
@@ -101,23 +86,20 @@ To do it you just have to create a class who implements `Mmc\Processor\Component
 <?php
 
 use Mmc\Processor\Component\Processor;
-use Mmc\Processor\Component\Request;
 use Mmc\Processor\Component\Response;
 use Mmc\Processor\Component\ResponseStatusCode;
 
 class CustomProcessor implements Processor
 {
-    public function supports(Request $request)
+    public function supports($request)
     {
         // With the $request you have to decide if this processor can do the job
-        // You can use the input to do this
-        $input = $request->getInput();
-        // Don't forget to check the 'expectedOuput', if this processor can't
-        // produce that object you have to return false
-        $expectedOuput = $request->getExpectedOutput();
+
+        // i.e.
+        return $request instanceof MyClass;
     }
 
-    public function process(Request $request)
+    public function process($request)
     {
         // Advice : check the method 'supports'
         if (!$this->supports($request)) {
@@ -191,5 +173,5 @@ services:
 In this example, the `ChainProcessor` __my\_chain__ will receive the two `Processor` __p1__ and __p2__.
 
 ## What now ?
-The input of the `Request` if no constraint by a type hinting, so you can use really what you want to create your request.
-The `ChainProcessor` can do what you want... if it contains `Processor` can do it.
+The input of the `Processor` if no constraint by a type hinting, so you can use really what you want to create your request.
+The `ChainProcessor` can do what you want... if it contains `Processor` who can do it.

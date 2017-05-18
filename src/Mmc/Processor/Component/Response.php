@@ -2,8 +2,6 @@
 
 namespace Mmc\Processor\Component;
 
-use Mmc\Processor\Component\Exception\OutputTypeException;
-
 class Response
 {
     private $request;
@@ -17,7 +15,7 @@ class Response
     private $extras;
 
     public function __construct(
-        Request $request,
+        $request,
         $output,
         $statusCode = ResponseStatusCode::OK,
         $reasonPhrase = ''
@@ -28,13 +26,6 @@ class Response
             throw new \InvalidArgumentException('This statusCode is not valid');
         }
 
-        $expectedOutput = $this->request->getExpectedOutput();
-        if ($expectedOutput
-            && !$output instanceof $expectedOutput
-            && ($this->statusCode == ResponseStatusCode::OK || $output !== null)
-        ) {
-            throw new OutputTypeException('The output has to be an instance of '.$this->request->getExpectedOutput());
-        }
         $this->output = $output;
 
         $this->statusCode = $statusCode;
@@ -45,7 +36,7 @@ class Response
     }
 
     /**
-     * @return Request
+     * @return mixed
      */
     public function getRequest()
     {

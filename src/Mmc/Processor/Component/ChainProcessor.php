@@ -22,7 +22,7 @@ class ChainProcessor implements Processor
         return $this;
     }
 
-    public function supports(Request $request)
+    public function supports($request)
     {
         foreach ($this->items as $item) {
             if ($item->getProcessor()->supports($request)) {
@@ -33,7 +33,7 @@ class ChainProcessor implements Processor
         return false;
     }
 
-    public function process(Request $request)
+    public function process($request)
     {
         foreach ($this->items as $item) {
             $processor = $item->getProcessor();

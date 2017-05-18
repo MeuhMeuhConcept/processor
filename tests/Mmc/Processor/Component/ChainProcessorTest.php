@@ -4,7 +4,6 @@ namespace Mmc\Processor\Component\Test;
 
 use Mmc\Processor\Component\BasicProcessor;
 use Mmc\Processor\Component\ChainProcessor;
-use Mmc\Processor\Component\Request;
 use Mmc\Processor\Component\ResponseStatusCode;
 
 class ChainProcessorTest extends \PHPUnit_Framework_TestCase
@@ -17,17 +16,17 @@ class ChainProcessorTest extends \PHPUnit_Framework_TestCase
 
         $this->chainProcessor
             ->add(
-                new BasicProcessor('foo', null, 'bar'),
+                new BasicProcessor('foo', 'bar'),
                 'p1',
                 5
             )
             ->add(
-                new BasicProcessor('foo', null, 'bar'),
+                new BasicProcessor('foo', 'bar'),
                 'p2',
                 3
             )
             ->add(
-                new BasicProcessor('bar', null, 'foo'),
+                new BasicProcessor('bar', 'foo'),
                 'p3',
                 1
             )
@@ -36,7 +35,7 @@ class ChainProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function testNotImplement()
     {
-        $request = new Request('foobar');
+        $request = 'foobar';
 
         $this->assertFalse($this->chainProcessor->supports($request));
 
@@ -45,7 +44,7 @@ class ChainProcessorTest extends \PHPUnit_Framework_TestCase
 
     public function testChain()
     {
-        $request = new Request('foo');
+        $request = 'foo';
 
         $this->assertTrue($this->chainProcessor->supports($request));
         $response = $this->chainProcessor->process($request);

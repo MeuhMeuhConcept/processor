@@ -2,7 +2,6 @@
 
 namespace Mmc\Processor\Component\Tests;
 
-use Mmc\Processor\Component\Request;
 use Mmc\Processor\Component\Response;
 use Mmc\Processor\Component\ResponseStatusCode;
 
@@ -12,7 +11,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->request = $this->createMock(Request::class);
+        $this->request = 'request';
     }
 
     public function testConstructWithDefaultValuesAndGetters()
@@ -41,31 +40,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($statusCode, $response->getStatusCode());
         $this->assertEquals($reasonPhrase, $response->getReasonPhrase());
         $this->assertEquals('bar', $response->getExtra('foo'));
-    }
-
-    /**
-     * @expectedException Mmc\Processor\Component\Exception\OutputTypeException
-     */
-    public function testBadOutput()
-    {
-        $this->request
-            ->method('getExpectedOutput')
-            ->willReturn('Foo\Bar')
-            ;
-        $output = new \stdClass();
-
-        $response = new Response($this->request, $output);
-    }
-
-    public function testSupportedNullOutputWhenStatusCodeNotOK()
-    {
-        $this->request
-            ->method('getExpectedOutput')
-            ->willReturn('Foo\Bar')
-            ;
-        $output = new \stdClass();
-
-        $response = new Response($this->request, null, ResponseStatusCode::NOT_SUPPORTED);
     }
 
     /**

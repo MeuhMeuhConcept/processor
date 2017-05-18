@@ -9,12 +9,12 @@ interface Processor
      *
      * @return bool
      */
-    public function supports(Request $request);
+    public function supports($request);
 
     /**
      * Try to proceed this request.
      *
      * @return Response
      */
-    public function process(Request $request);
+    public function process($request);
 }
