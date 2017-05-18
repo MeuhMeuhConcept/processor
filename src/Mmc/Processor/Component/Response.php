@@ -84,4 +84,9 @@ class Response
 
         return $this;
     }
+
+    public function isSuccessed()
+    {
+        return $this->getStatusCode() == ResponseStatusCode::OK;
+    }
 }
