@@ -110,7 +110,7 @@ class CustomProcessor implements Processor
 
         // and return the Response
 
-        return Resposne($request, $output); // $output had been create during the job was doing
+        return Response($request, $output); // $output had been create during the job was doing
     }
 }
 ```
@@ -120,6 +120,75 @@ Now, you just have to add it on a `ChainProcessor`.
 <?php
 
 $chainProcessor->add(new CustomProcessor());
+```
+
+### Easiers ways
+* use `Mmc\Processor\Component\ProcessorTrait` and implements `Mmc\Processor\Component\Processor`
+* extends `Mmc\Processor\Component\AbstractProcessor` (who use `Mmc\Processor\Component\ProcessTrait`)
+
+Why ? Because the process method :
+* already test if request is supported by processor before proceed
+* create and return a `Response` with `ResponseStatusCode::INTERNAL_ERROR` status code if your processor return `null`
+* create and return a `Response` with `ResponseStatusCode::INTERNAL_ERROR` status code if your processor throw an exception.
+* create and return a `Response` with `ResponseStatusCode::OK`  status code if your processor return a not null value who is not an instance of `Response`
+
+The difference with previous method is that 'process' method have to be call 'doProcess' and be `protected`.
+
+#### Example with `AbstractProcessor`
+```php
+<?php
+
+use Mmc\Processor\Component\AbstractProcessor;
+
+class CustomProcessor extends AbstractProcessor
+{
+    public function supports($request)
+    {
+        // With the $request you have to decide if this processor can do the job
+
+        // i.e.
+        return $request instanceof MyClass;
+    }
+
+    protected function doPocess($request)
+    {
+        // No need to check if $request is supported
+
+        // do the job
+
+        // and return the Response
+        // or nothing for bad response
+        // or throw exception for bad response
+        // or directly the ouput for bood response
+    }
+}
+```
+
+#### Example with `ProcessorTrait`
+
+```php
+<?php
+
+use Mmc\Processor\Component\Processor;
+use Mmc\Processor\Component\ProcessorTrait;
+
+class CustomProcessor implements Processor
+{
+    use ProcessorTrait;
+
+    public function supports($request)
+    {
+        // With the $request you have to decide if this processor can do the job
+
+        // i.e.
+        return $request instanceof MyClass;
+    }
+
+    protected function doPocess($request)
+    {
+        return $this->otherMethod($request);
+    }
+}
 ```
 
 ## Integration with other libraries
