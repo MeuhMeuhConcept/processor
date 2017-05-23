@@ -18,7 +18,7 @@ trait ProcessorTrait
             return new Response($request, $e, ResponseStatusCode::INTERNAL_ERROR, $e->getMessage());
         }
 
-        if ($response == null) {
+        if ($response === null) {
             return new Response($request, null, ResponseStatusCode::INTERNAL_ERROR);
         }
 
