@@ -35,13 +35,22 @@ class ChainProcessor extends AbstractProcessor
 
     protected function doProcess($request)
     {
+        $item = $this->findItem($request);
+
+        if ($item) {
+            $response = $item->getProcessor()->process($request);
+            $response->setExtra('name', $item->getName());
+
+            return $response;
+        }
+    }
+
+    protected function findItem($request)
+    {
         foreach ($this->items as $item) {
             $processor = $item->getProcessor();
             if ($processor->supports($request)) {
-                $response = $processor->process($request);
-                $response->setExtra('name', $item->getName());
-
-                return $response;
+                return $item;
             }
         }
     }
