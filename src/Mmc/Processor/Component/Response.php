@@ -72,7 +72,7 @@ class Response
      */
     public function getExtra($key)
     {
-        return $this->extras[$key];
+        return isset($this->extras[$key]) ? $this->extras[$key] : null;
     }
 
     /**
