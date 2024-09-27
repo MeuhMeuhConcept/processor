@@ -18,19 +18,22 @@ class ChainProcessorPass implements CompilerPassInterface
         foreach ($chainTaggedServices as $id => $tags) {
             $definition = $container->getDefinition($id);
 
-            $taggedServices = $container->findTaggedServiceIds($id);
-            foreach ($taggedServices as $itemId => $itemTags) {
-                foreach ($itemTags as $tagOptions) {
-                    $options = $resolver->resolve($tagOptions);
+            foreach ($tags as $tag) {
+                $key = $tag['target'] ?? $id;
+                $taggedServices = $container->findTaggedServiceIds($key);
+                foreach ($taggedServices as $itemId => $itemTags) {
+                    foreach ($itemTags as $tagOptions) {
+                        $options = $resolver->resolve($tagOptions);
 
-                    $definition->addMethodCall(
-                        'add',
-                        [
-                            new Reference($itemId),
-                            $itemId,
-                            $options['priority'],
-                        ]
-                    );
+                        $definition->addMethodCall(
+                            'add',
+                            [
+                                new Reference($itemId),
+                                $itemId,
+                                $options['priority'],
+                            ]
+                        );
+                    }
                 }
             }
         }
